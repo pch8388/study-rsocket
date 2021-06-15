@@ -1,0 +1,10 @@
+# netty port
+server:
+  port: 9000
+
+# R socket server port & protocol
+spring:
+  rsocket:
+    server:
+      port: 7000
+      transport: tcp
