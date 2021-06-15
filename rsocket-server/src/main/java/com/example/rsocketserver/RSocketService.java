@@ -36,4 +36,9 @@ public class RSocketService {
 			.doOnNext(this.itemSink::tryEmitNext)
 			.then();
 	}
+
+	@MessageMapping("newItems.monitor")
+	public Flux<Item> monitorNewItems() {
+		return this.itemSink.asFlux();
+	}
 }
