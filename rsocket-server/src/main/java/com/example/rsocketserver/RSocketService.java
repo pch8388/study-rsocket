@@ -29,4 +29,11 @@ public class RSocketService {
 		return this.repository.findAll()
 			.doOnNext(this.itemSink::tryEmitNext);
 	}
+
+	@MessageMapping("newItems.fire-and-forget")
+	public Mono<Void> processNewItemsViaRSocketFireAndForget(Item item) {
+		return this.repository.save(item)
+			.doOnNext(this.itemSink::tryEmitNext)
+			.then();
+	}
 }
