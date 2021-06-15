@@ -3,6 +3,7 @@ package com.example.rsocketserver;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Service;
 
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.publisher.Sinks;
 
@@ -23,4 +24,9 @@ public class RSocketService {
 			.doOnNext(this.itemSink::tryEmitNext);
 	}
 
+	@MessageMapping("newItems.request-stream")
+	public Flux<Item> findItemsViaRSocketRequestStream() {
+		return this.repository.findAll()
+			.doOnNext(this.itemSink::tryEmitNext);
+	}
 }
