@@ -3,10 +3,12 @@ package com.example.rsocketserver;
 import org.springframework.data.annotation.Id;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class Item {
 
 	@Id
