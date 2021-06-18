@@ -8,3 +8,15 @@ spring:
     server:
       port: 7000
       transport: tcp
+
+logging:
+  level:
+    com:
+      example:
+        rsocketserver: DEBUG
+  org:
+    springframework:
+      data: DEBUG
+  reactor: DEBUG
+  io:
+    rsocket: DEBUG
