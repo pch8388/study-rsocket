@@ -1,13 +1,13 @@
 package com.example.rsocketclient;
 
 import static io.rsocket.metadata.WellKnownMimeType.*;
+import static org.springframework.http.MediaType.*;
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON;
 import static org.springframework.util.MimeTypeUtils.*;
 
 import java.net.URI;
 import java.time.Duration;
 
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.rsocket.RSocketRequester;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,7 +43,7 @@ public class RSocketController {
 				URI.create("/items/request-response")).body(savedItem));
 	}
 
-	@GetMapping(value = "/items/request-stream", produces = MediaType.APPLICATION_NDJSON_VALUE)
+	@GetMapping(value = "/items/request-stream", produces = APPLICATION_NDJSON_VALUE)
 	public Flux<Item> findItemsUsingRSocketRequestStream() {
 		return this.requester
 			.flatMapMany(rSocketRequester -> rSocketRequester
@@ -63,5 +63,13 @@ public class RSocketController {
 				Mono.just(
 					ResponseEntity.created(
 						URI.create("/items/fire-and-forget")).build()));
+	}
+
+	@GetMapping(value = "/items", produces = TEXT_EVENT_STREAM_VALUE)
+	public Flux<Item> liveUpdates() {
+		return this.requester
+			.flatMapMany(rSocketRequester -> rSocketRequester
+				.route("newItems.monitor")
+				.retrieveFlux(Item.class));
 	}
 }
