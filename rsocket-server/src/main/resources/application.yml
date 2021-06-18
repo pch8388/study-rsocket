@@ -14,9 +14,9 @@ logging:
     com:
       example:
         rsocketserver: DEBUG
-  org:
-    springframework:
-      data: DEBUG
-  reactor: DEBUG
-  io:
-    rsocket: DEBUG
+    org:
+      springframework:
+        data: DEBUG
+    reactor: DEBUG
+    io:
+      rsocket: DEBUG
